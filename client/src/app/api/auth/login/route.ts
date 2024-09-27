@@ -51,6 +51,9 @@ export async function POST(request: Request) {
   try {
     const { payload } = await authApiRequest.sLogin(body)
     const { accessToken, refreshToken } = payload.data
+    console.log("Access Token:", accessToken);
+console.log("Refresh Token:", refreshToken);
+
     const decodedAccessToken = jwt.decode(accessToken) as { exp: number }
     const decodedRefreshToken = jwt.decode(refreshToken) as { exp: number }
     cookieStore.set('accessToken', accessToken, {
@@ -69,6 +72,10 @@ export async function POST(request: Request) {
     })
     return Response.json(payload)
   } catch (error) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const errorMessage = (error as any).message || "Không có thông tin chi tiết"; 
+
+
     if (error instanceof HttpError) {
       return Response.json(error.payload, {
         status: error.status
@@ -76,7 +83,8 @@ export async function POST(request: Request) {
     } else {
       return Response.json(
         {
-          message: 'Có lỗi xảy ra'
+          message: 'Có lỗi xảy ra',
+          details: errorMessage,
         },
         {
           status: 500
