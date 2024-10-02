@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { clsx, type ClassValue } from "clsx"
 import { UseFormSetError } from "react-hook-form"
 import { twMerge } from "tailwind-merge"
@@ -40,3 +41,11 @@ export const handleErrorApi = ({
   }
 }
 
+const isBrowser = typeof window !== 'undefined'
+ export const getAccessTokenFromLocalStorage = () => 
+  { return isBrowser ? localStorage.getItem('accessToken') : null}
+ 
+
+ export const getRefreshTokenFromLocalStorage = () => 
+  isBrowser ? localStorage.getItem('refreshToken') : null
+ 
