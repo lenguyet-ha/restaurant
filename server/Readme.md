@@ -1,6 +1,6 @@
 # Giới thiệu về API
 
-Đây là backend API cho dự án Order món ă
+Đây là backend API cho dự án Order món ăn
 
 - Authentication: Login, Register, Logout
 - Account: Get thông tin cá nhân, Cập nhật thông tin cá nhân
