@@ -142,6 +142,8 @@ const request = async <Response>(
           }
         }
       } else {
+        // đây là trường hợp khi mà chúng ta vẫn còn access token(còn hạn)
+        //và chúng ta gọi API ở Next server(route handler, server component) đến server backend
         const accessToken = (options?.headers as any)?.Authorization.split(
           "Bearer "
         )[1];

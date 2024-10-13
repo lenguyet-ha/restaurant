@@ -8,14 +8,22 @@ const unAuthPaths = ['/login']
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   // pathname: /manage/dashboard
-  const isAuth = Boolean(request.cookies.get('accessToken')?.value)
+ const accessToken = request.cookies.get('accessToken')?.value
+ const refreshToken = request.cookies.get('refreshToken')?.value
   // Chưa đăng nhập thì không cho vào private paths
-  if (privatePaths.some((path) => pathname.startsWith(path)) && !isAuth) {
-    return NextResponse.redirect(new URL('/login', request.url))
+  if (privatePaths.some((path) => pathname.startsWith(path)) && !refreshToken) {
+
+    return NextResponse.redirect(new URL('/logout', request.url))
   }
   // Đăng nhập rồi thì sẽ không cho vào login nữa
-  if (unAuthPaths.some((path) => pathname.startsWith(path)) && isAuth) {
+  if (unAuthPaths.some((path) => pathname.startsWith(path)) && refreshToken) {
     return NextResponse.redirect(new URL('/', request.url))
+  }
+  //logout khi access token
+  if(unAuthPaths.some(path => pathname.startsWith(path)) && !accessToken && refreshToken ){
+    const url = new URL('/logout', request.url)
+    url.searchParams.set('refreshToken', refreshToken)
+    return NextResponse.redirect(url)
   }
   return NextResponse.next()
 }
@@ -24,3 +32,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: ['/manage/:path*', '/login']
 }
+
+// middleware là một tính năng,
+// cho phép bạn thực thi một đoạn mã trên tầng server
+// trước khi yêu cầu HTTP của người dùng đến được xử lý bởi route hoặc page tương ứng
