@@ -28,6 +28,7 @@ import {
   GuestLoginRes,
   GuestLoginResType
 } from '@/schemaValidations/guest.schema'
+
 import { FastifyInstance, FastifyPluginOptions } from 'fastify'
 
 export default async function guestRoutes(fastify: FastifyInstance, options: FastifyPluginOptions) {
