@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import RefreshToken from './refresh-token'
+
+import { useContext, useEffect, useState, createContext } from 'react'
+import { getAccessTokenFromLocalStorage } from '@/lib/utils'
 
 const queryClient = new QueryClient({
     defaultOptions:{
@@ -12,12 +16,29 @@ const queryClient = new QueryClient({
     }
 })
 
+const AppContext = createContext({
+    isAuth: false,
+    setIsAuth: (isAuth: boolean) => {}
+  })
+  export const useAppContext = () => {
+    return useContext(AppContext)
+  }
 export default function AppProvider({children}: {children: React.ReactNode}) {
+    const [isAuth, setIsAuthState] = useState(false)
+    useEffect(() => {
+        const accessToken = getAccessTokenFromLocalStorage()
+        if(accessToken) setIsAuthState(true)
+    }, [])
+
+
     return (
-        <QueryClientProvider client={queryClient}>
+        <AppContext.Provider value={{ isAuth, setIsAuth: setIsAuthState }} >
+            <QueryClientProvider client={queryClient}>
             {children}
-            <RefreshToken/>
+            <RefreshToken />
             <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
+        </AppContext.Provider>  
+
     )
 }

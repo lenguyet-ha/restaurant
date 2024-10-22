@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 import { Button } from '@/components/ui/button'
@@ -10,11 +11,16 @@ import { LoginBody, LoginBodyType } from '@/schemaValidations/auth.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useLoginMutation } from '@/queries/useAuth'
 import { toast } from '@/hooks/use-toast'
-import { handleErrorApi } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
+import { handleErrorApi, removeTokensFromLocalStorage } from '@/lib/utils'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { useAppContext } from '@/components/app-provider'
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation()
+  const searchParams = useSearchParams()
+  const clearToken = searchParams.get('clearToken')
+  const {setIsAuth} = useAppContext()
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -23,6 +29,11 @@ export default function LoginForm() {
     }
   })
   const router = useRouter()
+  useEffect(() => {
+    if(clearToken){
+     setIsAuth(false)
+    }
+  }, [clearToken, setIsAuth])
    
    const onSubmit = async(data: LoginBodyType) => {
      if(loginMutation.isPending) return
