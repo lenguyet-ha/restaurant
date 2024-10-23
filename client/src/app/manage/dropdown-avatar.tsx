@@ -16,10 +16,12 @@ import { useLogoutMutation } from "@/queries/useAuth";
 import { useRouter } from "next/navigation";
 import { handleErrorApi } from "@/lib/utils";
 import { useAccountMe } from "@/queries/useAccount";
+import { useAppContext } from "@/components/app-provider";
 
 
 
 export default function DropdownAvatar() {
+  const {setIsAuth} = useAppContext()
   const router = useRouter();
   const logoutMutation = useLogoutMutation();
   const {data} = useAccountMe()
@@ -28,6 +30,7 @@ export default function DropdownAvatar() {
     if (logoutMutation.isPending) return;
     try {
       await logoutMutation.mutateAsync();
+      setIsAuth(false)
       router.push("/");
     } catch (error: any) {
       handleErrorApi({
