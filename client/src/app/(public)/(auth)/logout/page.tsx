@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -6,9 +6,9 @@ import { useAppContext } from "@/components/app-provider";
 import { getAccessTokenFromLocalStorage, getRefreshTokenFromLocalStorage } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
-import {  useEffect, useRef } from "react";
+import {  Suspense, useEffect, useRef } from "react";
 
-export default function LogoutPage() {
+function Logout(){
   const { mutateAsync } = useLogoutMutation();
   const router = useRouter();
   const {setIsAuth} = useAppContext() 
@@ -36,6 +36,11 @@ export default function LogoutPage() {
    else {
     router.push('/')
    }
-  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl]);
+  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl, setIsAuth]);
   return <div>Log out....</div>;
+}
+export default function LogoutPage() {
+ <Suspense fallback={<div>Loading...</div>}>    
+    <Logout />  
+    </Suspense>
 }
