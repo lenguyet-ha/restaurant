@@ -245,7 +245,7 @@ export default function AccountTable() {
         <EditEmployee
           id={employeeIdEdit}
           setId={setEmployeeIdEdit}
-          onSubmitSuccess={() => {}}
+         onSubmitSuccess={() => {}}
         />
         <AlertDialogDeleteAccount
           employeeDelete={employeeDelete}
@@ -268,8 +268,6 @@ export default function AccountTable() {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => {
-                console.log('headerGroup',headerGroup); // Ghi log headerGroup
-                console.log('headerGroup.headers',headerGroup.headers); // Ghi log headerGroup.headers
                 return (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
