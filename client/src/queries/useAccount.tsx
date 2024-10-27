@@ -1,6 +1,7 @@
 import accountApiRequest from "@/apiRequests/account";
 import {
 
+  CreateEmployeeAccountBodyType,
   UpdateEmployeeAccountBodyType,
 
 } from "@/schemaValidations/account.schema";
@@ -62,7 +63,7 @@ export const useUpdateAccountMutation = () => {
 export const useAddAccountMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: accountApiRequest.addEmployee,
+        mutationFn: (body: CreateEmployeeAccountBodyType) => accountApiRequest.addEmployee(body),
         onSuccess: () => {
             queryClient.invalidateQueries({
                 queryKey: ["accounts"], 
@@ -74,7 +75,7 @@ export const useAddAccountMutation = () => {
 export const useDeleteAccountMutation = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: accountApiRequest.deleteEmployee,
+        mutationFn: (id: number) => accountApiRequest.deleteEmployee(id),
         onSuccess: ()=>{
             queryClient.invalidateQueries({
                 queryKey: ['accounts'],
