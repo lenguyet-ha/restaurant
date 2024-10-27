@@ -55,7 +55,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useSearchParams } from "next/navigation";
 import AutoPagination from "@/components/auto-pagination";
-import { useGetAccountList } from "@/queries/useAccount";
+import { useDeleteAccountMutation, useGetAccountList } from "@/queries/useAccount";
+import { toast } from "@/hooks/use-toast";
+import { handleErrorApi } from "@/lib/utils";
 
 type AccountItem = AccountListResType["data"][0];
 
@@ -152,6 +154,23 @@ function AlertDialogDeleteAccount({
   employeeDelete: AccountItem | null;
   setEmployeeDelete: (value: AccountItem | null) => void;
 }) {
+  const {mutateAsync} = useDeleteAccountMutation()
+  const deleteAccount = async () => {
+    if(employeeDelete){
+      try {
+        const result = await mutateAsync(employeeDelete.id)
+        setEmployeeDelete(null)
+        toast({
+          title: result.payload.message
+        })
+      } catch(error) {
+       
+        handleErrorApi({
+          error,
+        })
+      }
+    }
+  }
   return (
     <AlertDialog
       open={Boolean(employeeDelete)}
@@ -161,20 +180,20 @@ function AlertDialogDeleteAccount({
         }
       }}
     >
-      <AlertDialogContent>
+      <AlertDialogContent  className="text-white">
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa nhân viên?</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle><span className="text-white">Xóa nhân viên?</span></AlertDialogTitle>
+          <AlertDialogDescription className="text-white">
             Tài khoản{" "}
-            <span className="bg-foreground text-primary-foreground rounded px-1">
+            <span className="bg-foregroundtext-primary-foreground rounded px-1">
               {employeeDelete?.name}
             </span>{" "}
             sẽ bị xóa vĩnh viễn
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Continue</AlertDialogAction>
+          <AlertDialogCancel >Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={deleteAccount}>Continue</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
