@@ -110,7 +110,7 @@ export default function AddDish() {
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-screen overflow-auto">
+      <DialogContent className="text-white sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
           <DialogTitle>Thêm món ăn</DialogTitle>
         </DialogHeader>
