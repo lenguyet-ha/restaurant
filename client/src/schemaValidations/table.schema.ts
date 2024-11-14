@@ -26,7 +26,7 @@ export const TableRes = z.object({
 export type TableResType = z.TypeOf<typeof TableRes>
 
 export const TableListRes = z.object({
-  data: z.array(TableSchema),
+  data: TableSchema,
   message: z.string()
 })
 
