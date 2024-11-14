@@ -20,7 +20,7 @@ export function middleware(request: NextRequest) {
   // Đăng nhập rồi thì sẽ không cho vào login nữa
   if (unAuthPaths.some((path) => pathname.startsWith(path)) && refreshToken) {
     return NextResponse.redirect(new URL('/', request.url))
-  }
+  } 
   //đăng nhập rồi nhưng access token hết hạn
   if(unAuthPaths.some(path => pathname.startsWith(path)) && !accessToken && refreshToken ){
     const url = new URL('/refresh-token', request.url)
