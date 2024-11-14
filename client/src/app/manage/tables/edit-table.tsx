@@ -40,7 +40,7 @@ export default function EditTable({
   const {data} = useGetTableQuery({enabled: Boolean(id), id: id as number})
   useEffect(()=> {
     if(data){
-      const {capacity, status} = data.payload.data
+      const {capacity, status} = data.payload.data[0]
       form.reset({
         capacity,
         changeToken: form.getValues('changeToken'),
@@ -96,7 +96,7 @@ export default function EditTable({
                 <div className='grid grid-cols-4 items-center justify-items-start gap-4'>
                   <Label htmlFor='name'>Số hiệu bàn</Label>
                   <div className='col-span-3 w-full space-y-2'>
-                    <Input id='number' type='number' className='w-full' value={data?.payload.data.number} readOnly />
+                    <Input id='number' type='number' className='w-full' value={data?.payload.data[0].number} readOnly />
                     <FormMessage />
                   </div>
                 </div>
@@ -168,8 +168,8 @@ export default function EditTable({
                   <Label>QR Code</Label>
                   <div className='col-span-3 w-full space-y-2'> {data && (
                       <QRCodeTable
-                        token={data.payload.data.token}
-                        tableNumber={data.payload.data.number}
+                        token={data.payload.data[0].token}
+                        tableNumber={data.payload.data[0].number}
                       />
                     )}</div>
                 </div>
@@ -181,14 +181,14 @@ export default function EditTable({
                     {data && <Link
                       href={getTableLink({
                         token: '123123123',
-                        tableNumber: data.payload.data.number
+                        tableNumber: data.payload.data[0].number
                       })}
                       target='_blank'
                       className='break-all'
                     >
                       {getTableLink({
                         token: '123123123',
-                        tableNumber: data.payload.data.number
+                        tableNumber: data.payload.data[0].number
                       })}
                     </Link>}
                   </div>
