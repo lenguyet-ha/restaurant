@@ -39,6 +39,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useAddDishMutation } from "@/queries/useDish";
 import { toast } from "@/hooks/use-toast";
 import { useUploadMediaMutation } from "@/queries/useMedia";
+import revalidateApiRequest from "@/apiRequests/revalidate";
 
 
 export default function AddDish() {
@@ -87,6 +88,7 @@ export default function AddDish() {
           image: imageUrl,
         };
         const result = await addDishMutation.mutateAsync(body);
+        await revalidateApiRequest('dishes')
         toast({
           description: result.payload.message,
         });
