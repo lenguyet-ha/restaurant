@@ -7,17 +7,47 @@ import { useForm } from 'react-hook-form'
 import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GuestLoginBody, GuestLoginBodyType } from '@/schemaValidations/guest.schema'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { useGuestLoginMutation } from '@/queries/useGuest'
+import { handleErrorApi } from '@/lib/utils'
+import { useAppContext } from '@/components/app-provider'
 
 export default function GuestLoginForm() {
+  const {setRole} = useAppContext()
+  const searchParams = useSearchParams()
+  const params = useParams()
+  const tableNumber = Number(params.number)
+  const token = searchParams.get('token')
+  const router = useRouter()
+  const loginMutation = useGuestLoginMutation()
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
-    defaultValues: {
+      defaultValues: {
       name: '',
-      token: '',
-      tableNumber: 1
+      token: token ?? '',
+      tableNumber: tableNumber
     }
   })
+useEffect(() => {
+ if(!token){
+  router.push('/')
+ }
+}, [token, router])
 
+async function onSubmit(values: GuestLoginBodyType){
+ if(loginMutation.isPending) return
+ try {
+  const result = await loginMutation.mutateAsync(values)
+  setRole(result.payload.data.guest.role)
+  router.push("/guest/menu")
+ } catch (error) {
+    handleErrorApi({
+      error,
+      setError: form.setError
+    })
+ }
+} 
   return (
     <Card className='mx-auto max-w-sm'>
       <CardHeader>
@@ -25,7 +55,7 @@ export default function GuestLoginForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className='space-y-2 max-w-[600px] flex-shrink-0 w-full' noValidate>
+          <form className='space-y-2 max-w-[600px] flex-shrink-0 w-full' noValidate onSubmit={form.handleSubmit(onSubmit, console.log)}>
             <div className='grid gap-4'>
               <FormField
                 control={form.control}

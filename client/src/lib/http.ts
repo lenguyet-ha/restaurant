@@ -156,11 +156,11 @@ const request = async <Response>(
   // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
   if (isClient) {
     const normalizeUrl = normalizePath(url);
-    if (normalizeUrl === "api/auth/login") {
+    if (["api/auth/login", 'api/guest/auth/login'].includes(normalizeUrl)) {
       const { accessToken, refreshToken } = (payload as LoginResType).data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-    } else if (normalizeUrl === "api/auth/logout") {
+    } else if (["api/auth/logout", 'api/guest/auth/logout'].includes(normalizeUrl)) {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
     }
