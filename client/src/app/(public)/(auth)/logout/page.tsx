@@ -29,7 +29,7 @@ function Logout(){
         setTimeout(() => {
           ref.current = null;
         }, 1000);
-        setRole(undefined)
+        setRole()
         router.push("/login");
       });
     }

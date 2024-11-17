@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import guestApiRequest from '@/apiRequests/guest'
 
-export async function POST() {
+export async function POST(request: Request) {
   const cookieStore = cookies()
   const refreshToken = cookieStore.get('refreshToken')?.value
   if (!refreshToken) {
@@ -43,6 +42,7 @@ export async function POST() {
     })
     return Response.json(payload)
   } catch (error: any) {
+    console.log(error)
     return Response.json(
       {
         message: error.message ?? 'Có lỗi xảy ra'

@@ -26,7 +26,7 @@ export default function GuestLoginForm() {
       defaultValues: {
       name: '',
       token: token ?? '',
-      tableNumber: tableNumber
+      tableNumber,
     }
   })
 useEffect(() => {
@@ -55,7 +55,7 @@ async function onSubmit(values: GuestLoginBodyType){
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className='space-y-2 max-w-[600px] flex-shrink-0 w-full' noValidate onSubmit={form.handleSubmit(onSubmit, console.log)}>
+          <form className='space-y-2 max-w-[600px] flex-shrink-0 w-full' noValidate  onSubmit={form.handleSubmit(onSubmit, console.log)}>
             <div className='grid gap-4'>
               <FormField
                 control={form.control}

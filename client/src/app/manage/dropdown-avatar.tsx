@@ -30,7 +30,7 @@ export default function DropdownAvatar() {
     if (logoutMutation.isPending) return;
     try {
       await logoutMutation.mutateAsync();
-      setRole(undefined)
+      setRole()
       router.push("/");
     } catch (error: any) {
       handleErrorApi({

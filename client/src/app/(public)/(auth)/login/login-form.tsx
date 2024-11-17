@@ -31,7 +31,7 @@ export default function LoginForm() {
   const router = useRouter()
   useEffect(() => {
     if(clearToken){
-     setRole(undefined)
+     setRole()
     }
   }, [clearToken, setRole])
    

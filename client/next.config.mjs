@@ -10,6 +10,10 @@ const nextConfig = {
               pathname: '/**',
           
             },
+            {
+              hostname: 'via.placeholder.com',
+              pathname: '/**'
+            }
           ],
         },
 
