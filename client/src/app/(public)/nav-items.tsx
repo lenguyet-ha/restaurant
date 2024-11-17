@@ -5,7 +5,7 @@ import { cn, handleErrorApi } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
 import { RoleType } from "@/types/jwt.types";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const menuItems: {
   title: string;
