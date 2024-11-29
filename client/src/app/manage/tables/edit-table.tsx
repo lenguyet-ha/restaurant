@@ -232,14 +232,14 @@ export default function EditTable({
                     {data && (
                       <Link
                         href={getTableLink({
-                          token: "123123123",
+                          token: data.payload.data.token,
                           tableNumber: data.payload.data.number,
                         })}
                         target="_blank"
                         className="break-all"
                       >
                         {getTableLink({
-                          token: "123123123",
+                          token: data.payload.data.token,
                           tableNumber: data.payload.data.number,
                         })}
                       </Link>
