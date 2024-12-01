@@ -139,7 +139,22 @@ export const getVietnameseOrderStatus = (status: (typeof OrderStatus)[keyof type
       return 'Từ chối'
   }
 }
-
+export const getVietNameseOrderStatus = (
+  status: (typeof OrderStatus)[keyof typeof OrderStatus]
+) => {
+  switch (status){
+    case OrderStatus.Delivered:
+      return 'Đã phục vụ'
+    case OrderStatus.Paid:
+      return 'Đã thanh toán'
+    case OrderStatus.Pending:
+      return 'Chờ xử lý'
+    case OrderStatus.Processing:
+      return 'Đang nấu'
+    default:
+      return 'Từ chối'
+  }
+}
 export const getVietnameseTableStatus = (status: (typeof TableStatus)[keyof typeof TableStatus]) => {
   switch (status) {
     case TableStatus.Available:

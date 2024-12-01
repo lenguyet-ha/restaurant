@@ -8,7 +8,8 @@ import {
   GuestCreateOrdersBodyType,
   GuestLoginBodyType,
   GuestLoginResType,
-  GuestCreateOrdersResType
+  GuestCreateOrdersResType,
+  GuestGetOrdersResType
 } from '@/schemaValidations/guest.schema'
 
 const guestApiRequest = {
@@ -58,7 +59,7 @@ const guestApiRequest = {
   },
   order: (body: GuestCreateOrdersBodyType)=>
     http.post<GuestCreateOrdersResType>('/guest/orders', body),
-  getOrderList: () => http.get<GuestCreateOrdersResType>('/guest/orders')
+  getOrderList: () => http.get<GuestGetOrdersResType>('/guest/orders')
 }
 
 export default guestApiRequest

@@ -16,6 +16,11 @@ export const useGuestLogoutMutation = () => {
 export const useGuestGetOrderListQuery = () => {
   return useQuery({
     queryFn: guestApiRequest.getOrderList,
-    queryKey: ['guest-order'],
-  })
-}
+    queryKey: ["guest-order"],
+  });
+};
+export const useGuestOrderMutation = () => {
+  return useMutation({
+    mutationFn: guestApiRequest.order,
+  });
+};
