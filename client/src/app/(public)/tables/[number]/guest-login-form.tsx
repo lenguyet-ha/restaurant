@@ -51,7 +51,7 @@ async function onSubmit(values: GuestLoginBodyType){
   return (
     <Card className='mx-auto max-w-sm'>
       <CardHeader>
-        <CardTitle className='text-2xl'>Đăng nhập gọi món</CardTitle>
+        <CardTitle className='text-2xl'>Xin chào bạn!</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -63,7 +63,7 @@ async function onSubmit(values: GuestLoginBodyType){
                 render={({ field }) => (
                   <FormItem>
                     <div className='grid gap-2'>
-                      <Label htmlFor='name'>Tên khách hàng</Label>
+                      <Label htmlFor='name'>Tên của bạn</Label>
                       <Input id='name' type='text' required {...field} />
                       <FormMessage />
                     </div>
@@ -72,7 +72,7 @@ async function onSubmit(values: GuestLoginBodyType){
               />
 
               <Button type='submit' className='w-full'>
-                Đăng nhập
+                Băt đầu
               </Button>
             </div>
           </form>
