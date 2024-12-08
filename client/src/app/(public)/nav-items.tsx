@@ -34,7 +34,7 @@ const menuItems: {
   },
   {
     title: 'Đơn hàng',
-    href: 'guest/orders',
+    href: 'orders',
     role: [Role.Guest]
   }
 ]
