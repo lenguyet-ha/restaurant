@@ -49,7 +49,6 @@ import { useDeleteTableMutation, useTableListQuery } from '@/queries/useTable'
 import { toast } from '@/hooks/use-toast'
 
 type TableItem = TableListResType['data'][0]
-
 const TableTableContext = createContext<{
   setTableIdEdit: (value: number) => void
   tableIdEdit: number | undefined
@@ -269,10 +268,10 @@ export default function TableTable() {
           </Table>
         </div>
         <div className='flex items-center justify-end space-x-2 py-4'>
-          <div className='text-xs text-muted-foreground py-4 flex-1 '>
+          {/* <div className='text-xs text-muted-foreground py-4 flex-1 '>
             Hiển thị <strong>{table.getPaginationRowModel().rows.length}</strong> trong <strong>{data.length}</strong>{' '}
             kết quả
-          </div>
+          </div> */}
           <div>
             <AutoPagination
               page={table.getState().pagination.pageIndex + 1}

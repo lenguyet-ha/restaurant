@@ -11,8 +11,19 @@ import {
   useReactTable
 } from '@tanstack/react-table'
 import { Input } from '@/components/ui/input'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { GetOrdersResType, PayGuestOrdersResType, UpdateOrderResType } from '@/schemaValidations/order.schema'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table'
+import {
+  GetOrdersResType,
+  PayGuestOrdersResType,
+  UpdateOrderResType
+} from '@/schemaValidations/order.schema'
 import AddOrder from '@/app/manage/orders/add-order'
 import EditOrder from '@/app/manage/orders/edit-order'
 import { createContext, useEffect, useMemo, useState } from 'react'
@@ -27,12 +38,23 @@ import { Check, ChevronsUpDown } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Command,
+  CommandGroup,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger
+} from '@/components/ui/popover'
 import { endOfDay, format, startOfDay } from 'date-fns'
 import TableSkeleton from '@/app/manage/orders/table-skeleton'
-import { toast } from '@/components/ui/use-toast'
+
 import { GuestCreateOrdersResType } from '@/schemaValidations/guest.schema'
+import { useGetOrderListQuery } from '@/queries/useOrder'
+import { useTableListQuery } from '@/queries/useTable'
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {},
@@ -46,7 +68,10 @@ export const OrderTableContext = createContext({
   orderObjectByGuestId: {} as OrderObjectByGuestID
 })
 
-export type StatusCountObject = Record<(typeof OrderStatusValues)[number], number>
+export type StatusCountObject = Record<
+  (typeof OrderStatusValues)[number],
+  number
+>
 export type Statics = {
   status: StatusCountObject
   table: Record<number, Record<number, StatusCountObject>>
@@ -65,9 +90,14 @@ export default function OrderTable() {
   const page = searchParam.get('page') ? Number(searchParam.get('page')) : 1
   const pageIndex = page - 1
   const [orderIdEdit, setOrderIdEdit] = useState<number | undefined>()
-  const orderList: any = []
-  const tableList: any = []
-  const tableListSortedByNumber = tableList.sort((a: any, b: any) => a.number - b.number)
+  const orderListQuery = useGetOrderListQuery({
+    fromDate,
+    toDate
+  })
+  const orderList = orderListQuery.data?.payload.data ?? []
+  const tableListQuery = useTableListQuery()
+  const tableList = tableListQuery.data?.payload.data ?? []
+  const tableListSortedByNumber = tableList.sort((a, b) => a.number - b.number)
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
@@ -77,7 +107,8 @@ export default function OrderTable() {
     pageSize: PAGE_SIZE //default page size
   })
 
-  const { statics, orderObjectByGuestId, servingGuestByTableNumber } = useOrderService(orderList)
+  const { statics, orderObjectByGuestId, servingGuestByTableNumber } =
+    useOrderService(orderList)
 
   const changeStatus = async (body: {
     orderId: number
@@ -130,7 +161,11 @@ export default function OrderTable() {
       }}
     >
       <div className='w-full'>
-        <EditOrder id={orderIdEdit} setId={setOrderIdEdit} onSubmitSuccess={() => {}} />
+        <EditOrder
+          id={orderIdEdit}
+          setId={setOrderIdEdit}
+          onSubmitSuccess={() => {}}
+        />
         <div className=' flex items-center'>
           <div className='flex flex-wrap gap-2'>
             <div className='flex items-center'>
@@ -163,14 +198,22 @@ export default function OrderTable() {
         <div className='flex flex-wrap items-center gap-4 py-4'>
           <Input
             placeholder='Tên khách'
-            value={(table.getColumn('guestName')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('guestName')?.setFilterValue(event.target.value)}
+            value={
+              (table.getColumn('guestName')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('guestName')?.setFilterValue(event.target.value)
+            }
             className='max-w-[100px]'
           />
           <Input
             placeholder='Số bàn'
-            value={(table.getColumn('tableNumber')?.getFilterValue() as string) ?? ''}
-            onChange={(event) => table.getColumn('tableNumber')?.setFilterValue(event.target.value)}
+            value={
+              (table.getColumn('tableNumber')?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn('tableNumber')?.setFilterValue(event.target.value)
+            }
             className='max-w-[80px]'
           />
           <Popover open={openStatusFilter} onOpenChange={setOpenStatusFilter}>
@@ -183,7 +226,9 @@ export default function OrderTable() {
               >
                 {table.getColumn('status')?.getFilterValue()
                   ? getVietnameseOrderStatus(
-                      table.getColumn('status')?.getFilterValue() as (typeof OrderStatusValues)[number]
+                      table
+                        .getColumn('status')
+                        ?.getFilterValue() as (typeof OrderStatusValues)[number]
                     )
                   : 'Trạng thái'}
                 <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
@@ -201,7 +246,10 @@ export default function OrderTable() {
                           table
                             .getColumn('status')
                             ?.setFilterValue(
-                              currentValue === table.getColumn('status')?.getFilterValue() ? '' : currentValue
+                              currentValue ===
+                                table.getColumn('status')?.getFilterValue()
+                                ? ''
+                                : currentValue
                             )
                           setOpenStatusFilter(false)
                         }}
@@ -209,7 +257,10 @@ export default function OrderTable() {
                         <Check
                           className={cn(
                             'mr-2 h-4 w-4',
-                            table.getColumn('status')?.getFilterValue() === status ? 'opacity-100' : 'opacity-0'
+                            table.getColumn('status')?.getFilterValue() ===
+                              status
+                              ? 'opacity-100'
+                              : 'opacity-0'
                           )}
                         />
                         {getVietnameseOrderStatus(status)}
@@ -226,44 +277,63 @@ export default function OrderTable() {
           tableList={tableListSortedByNumber}
           servingGuestByTableNumber={servingGuestByTableNumber}
         />
-        {/* <TableSkeleton /> */}
-        <div className='rounded-md border'>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                      </TableHead>
-                    )
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                    ))}
+        {orderListQuery.isPending && <TableSkeleton />}
+        {!orderListQuery.isPending && (
+          <div className='rounded-md border'>
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      )
+                    })}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={orderTableColumns.length} className='h-24 text-center'>
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && 'selected'}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={orderTableColumns.length}
+                      className='h-24 text-center'
+                    >
+                      No results.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        )}
         <div className='flex items-center justify-end space-x-2 py-4'>
           <div className='text-xs text-muted-foreground py-4 flex-1 '>
-            Hiển thị <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
+            Hiển thị{' '}
+            <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
             <strong>{orderList.length}</strong> kết quả
           </div>
           <div>
@@ -278,3 +348,4 @@ export default function OrderTable() {
     </OrderTableContext.Provider>
   )
 }
+
