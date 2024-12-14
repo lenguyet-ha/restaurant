@@ -17,6 +17,8 @@ export const useGuestGetOrderListQuery = () => {
   return useQuery({
     queryFn: guestApiRequest.getOrderList,
     queryKey: ["guest-order"],
+    refetchOnWindowFocus: true,
+   
   });
 };
 export const useGuestOrderMutation = () => {
