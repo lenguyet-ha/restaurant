@@ -58,7 +58,7 @@ export const columns: ColumnDef<DishItem>[] = [
     filterFn: (row, columnId, filterValue: string) => {
       if (filterValue === undefined) return true
       return simpleMatchText(
-        String(row.getValue(columnId)),
+        String(row.original.name),
         String(filterValue)
       )
     }
@@ -136,7 +136,7 @@ export function DishesDialog({
       <DialogTrigger asChild>
         <Button variant='outline'>Thay đổi</Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[600px]'>
+      <DialogContent className='text-white sm:max-w-[600px]'>
         <DialogHeader>
           <DialogTitle>Chọn món ăn</DialogTitle>
         </DialogHeader>
