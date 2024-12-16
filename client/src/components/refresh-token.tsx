@@ -5,12 +5,14 @@
 import { checkAndRefreshToken } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useAppContext } from "./app-provider";
 
 // Những page sau sẽ không check refesh token
 const UNAUTHENTICATED_PATH = ["/login", "/logout", "/refresh-token"];
 export default function RefreshToken() {
   const pathname = usePathname();
   const router = useRouter();
+  const{socket, disconnectSocket} = useAppContext();
   useEffect(() => {
     if (UNAUTHENTICATED_PATH.includes(pathname)) return;
     let interval: any = null;
@@ -19,6 +21,7 @@ export default function RefreshToken() {
     checkAndRefreshToken({
       onError: () => {
         clearInterval(interval);
+        disconnectSocket()
         router.push('/login')
       },
     });
@@ -31,9 +34,15 @@ export default function RefreshToken() {
           router.push('/login')
         }
     }), TIMEOUT);
+    if(socket?.connected){
+      onConnect()
+    }
+    function onConnect(){
+      console.log(socket?.id)
+    }
     return () => {
       clearInterval(interval);
     };
-  }, [pathname, router]);
+  }, [disconnectSocket, pathname, router, socket?.connected, socket?.id]);
   return null;
 }

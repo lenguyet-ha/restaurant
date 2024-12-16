@@ -21,7 +21,7 @@ import { useAppContext } from "@/components/app-provider";
 
 
 export default function DropdownAvatar() {
-  const {setRole} = useAppContext()
+  const {setRole, disconnectSocket} = useAppContext()
   const router = useRouter();
   const logoutMutation = useLogoutMutation();
   const {data} = useAccountMe()
@@ -31,6 +31,7 @@ export default function DropdownAvatar() {
     try {
       await logoutMutation.mutateAsync();
       setRole()
+      disconnectSocket()
       router.push("/");
     } catch (error: any) {
       handleErrorApi({

@@ -20,7 +20,7 @@ export default function LoginForm() {
   const loginMutation = useLoginMutation()
   const searchParams = useSearchParams()
   const clearToken = searchParams.get('clearToken')
-  const {setRole} = useAppContext()
+  const {setRole, setSocket} = useAppContext()
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -44,6 +44,7 @@ export default function LoginForm() {
       })
       setRole(result.payload.data.account.role)
       router.push('/manage/dashboard')
+      setSocket(generateSocketInstance(result.payload.data.accessToken))
     }
     catch(error: any){
         handleErrorApi({

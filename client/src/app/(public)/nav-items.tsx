@@ -46,7 +46,7 @@ const menuItems: {
 // Nhưng ngay sau đó thì client render ra là Món ăn, Đơn hàng, Quản lý do đã check được trạng thái đăng nhập
 
 export default function NavItems({ className }: { className?: string }) {
-  const { role, setRole } = useAppContext();
+  const { role, setRole, disconnectSocket } = useAppContext();
   const logoutMutation = useLogoutMutation();
   const router = useRouter();
 
@@ -55,6 +55,7 @@ export default function NavItems({ className }: { className?: string }) {
     try {
       await logoutMutation.mutateAsync();
       setRole();
+      disconnectSocket()
       router.push("/");
     } catch (error) {
       handleErrorApi({
@@ -106,7 +107,7 @@ export default function NavItems({ className }: { className?: string }) {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
+            <AlertDialogTitle>Bạn có muốn thoát ra không?</AlertDialogTitle>
             <AlertDialogDescription>
               Việc thoát ra có thể làm mất đi hóa đơn của bạn
             </AlertDialogDescription>
