@@ -1,13 +1,13 @@
-import { Home, LineChart, ShoppingCart, Users2, Salad, Table } from 'lucide-react'
+import { Home, LineChart, ShoppingCart, Users2, Salad, Table, Fish, Truck, Warehouse } from 'lucide-react'
 
 const menuItems = [
   {
-    title: 'Dashboard',
+    title: 'Trang chủ',
     Icon: Home,
     href: '/'
   },
   {
-    title: 'Đơn hàng',
+    title: 'Đơn gọi  món',
     Icon: ShoppingCart,
     href: '/manage/orders'
   },
@@ -23,7 +23,7 @@ const menuItems = [
   },
 
   {
-    title: 'Phân tích',
+    title: 'Báo cáo thống kê',
     Icon: LineChart,
     href: '/manage/analytics'
   },
@@ -31,7 +31,22 @@ const menuItems = [
     title: 'Nhân viên',
     Icon: Users2,
     href: '/manage/accounts'
-  }
+  },
+  {
+    title: 'Nguyên liệu',
+    Icon: Fish,
+    href: '/manage/accounts'
+  },
+  {
+    title: 'Nhà cung cấp',
+    Icon: Truck,
+    href: '/'
+  },
+    {
+    title: 'Kho',
+    Icon: Warehouse,
+    href: '/'
+  },
 ]
 
 export default menuItems

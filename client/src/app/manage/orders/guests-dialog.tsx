@@ -118,7 +118,7 @@ export default function GuestsDialog({ onChoose }: { onChoose: (guest: GuestItem
       <DialogTrigger asChild>
         <Button variant='outline'>Chọn khách</Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[700px] max-h-full overflow-auto'>
+      <DialogContent className='text-white sm:max-w-[700px] max-h-full overflow-auto'>
         <DialogHeader>
           <DialogTitle>Chọn khách hàng</DialogTitle>
         </DialogHeader>
@@ -153,13 +153,14 @@ export default function GuestsDialog({ onChoose }: { onChoose: (guest: GuestItem
                 placeholder='Tên hoặc Id'
                 value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
                 onChange={(event) => table.getColumn('name')?.setFilterValue(event.target.value)}
-                className='w-[170px]'
-              />
+                className='w-[170px] bg-white '
+              />cay
               <Input
                 placeholder='Số bàn'
                 value={(table.getColumn('tableNumber')?.getFilterValue() as string) ?? ''}
                 onChange={(event) => table.getColumn('tableNumber')?.setFilterValue(event.target.value)}
-                className='w-[80px]'
+                className='w-[80px]  bg-white'
+              
               />
             </div>
             <div className='rounded-md border'>
@@ -208,7 +209,7 @@ export default function GuestsDialog({ onChoose }: { onChoose: (guest: GuestItem
               </Table>
             </div>
             <div className='flex items-center justify-end space-x-2 py-4'>
-              <div className='text-xs text-muted-foreground py-4 flex-1 '>
+              <div className='text-xs text-white text-muted-foreground py-4 flex-1 '>
                 Hiển thị <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
                 <strong>{data.length}</strong> kết quả
               </div>

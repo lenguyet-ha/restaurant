@@ -15,8 +15,8 @@ export default function AccountsPage() {
       <div className='space-y-2'>
         <Card x-chunk='dashboard-06-chunk-0'>
           <CardHeader>
-            <CardTitle>Đơn hàng</CardTitle>
-            <CardDescription>Quản lý đơn hàng</CardDescription>
+            <CardTitle>Đơn gọi món</CardTitle>
+            <CardDescription>Quản lý đơn gọi món</CardDescription>
           </CardHeader>
           <CardContent>
             <Suspense>

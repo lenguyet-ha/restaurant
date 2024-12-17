@@ -26,7 +26,7 @@ export default function AddOrder() {
   const [selectedGuest, setSelectedGuest] = useState<GetListGuestsResType['data'][0] | null>(null)
   const [isNewGuest, setIsNewGuest] = useState(true)
   const [orders, setOrders] = useState<CreateOrdersBodyType['orders']>([])
-  const dishes: DishListResType['data'] = []
+  const dishes: DishListResType['data'] = useMemo(() => [], [])
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -73,7 +73,7 @@ export default function AddOrder() {
       </DialogTrigger>
       <DialogContent className='text-white sm:max-w-[600px] max-h-screen overflow-auto'>
         <DialogHeader>
-          <DialogTitle>Tạo đơn hàng</DialogTitle>
+          <DialogTitle>Tạo đơn gọi món</DialogTitle>
         </DialogHeader>
         <div className='grid grid-cols-4 items-center justify-items-start gap-4'>
           <Label htmlFor='isNewGuest'>Khách hàng mới</Label>

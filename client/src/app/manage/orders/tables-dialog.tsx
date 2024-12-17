@@ -97,7 +97,7 @@ export function TablesDialog({ onChoose }: { onChoose: (table: TableItem) => voi
       <DialogTrigger asChild>
         <Button variant='outline'>Thay đổi</Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[600px] max-h-full overflow-auto'>
+      <DialogContent className='text-white sm:max-w-[600px] max-h-full overflow-auto'>
         <DialogHeader>
           <DialogTitle>Chọn bàn</DialogTitle>
         </DialogHeader>
@@ -108,14 +108,14 @@ export function TablesDialog({ onChoose }: { onChoose: (table: TableItem) => voi
                 placeholder='Số bàn'
                 value={(table.getColumn('number')?.getFilterValue() as string) ?? ''}
                 onChange={(event) => table.getColumn('number')?.setFilterValue(event.target.value)}
-                className='w-[80px]'
+                className='w-[80px] bg-white'
               />
             </div>
             <div className='rounded-md border'>
               <Table>
                 <TableHeader>
                   {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
+                    <TableRow key={headerGroup.id} className='bg-white'>
                       {headerGroup.headers.map((header) => {
                         return (
                           <TableHead key={header.id}>
@@ -167,7 +167,7 @@ export function TablesDialog({ onChoose }: { onChoose: (table: TableItem) => voi
               </Table>
             </div>
             <div className='flex items-center justify-end space-x-2 py-4'>
-              <div className='text-xs text-muted-foreground py-4 flex-1 '>
+              <div className='text-xs text-muted-foreground py-4 flex-1 text-white'>
                 Hiển thị <strong>{table.getPaginationRowModel().rows.length}</strong> trong{' '}
                 <strong>{data.length}</strong> kết quả
               </div>
