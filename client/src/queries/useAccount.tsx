@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import accountApiRequest from "@/apiRequests/account";
 import {
 
   CreateEmployeeAccountBodyType,
+  GetGuestListQueryParamsType,
   UpdateEmployeeAccountBodyType,
 
 } from "@/schemaValidations/account.schema";
@@ -82,4 +84,16 @@ export const useDeleteAccountMutation = () => {
             })
         }
     })
+}
+export const useGetGuestListQuery = (queryParams: GetGuestListQueryParamsType) => {
+  return useQuery({
+    queryFn: () => accountApiRequest.guestList(queryParams),
+    queryKey: ["guests", queryParams],
+  })
+}
+
+export const useCreateGuestMutation = () => {
+  return useMutation({
+    mutationFn: accountApiRequest.createGuest
+  })
 }
