@@ -25,7 +25,7 @@ const menuItems = [
   {
     title: 'Báo cáo thống kê',
     Icon: LineChart,
-    href: '/manage/analytics'
+    href: '/manage/dashboard'
   },
   {
     title: 'Nhân viên',
@@ -35,7 +35,7 @@ const menuItems = [
   {
     title: 'Nguyên liệu',
     Icon: Fish,
-    href: '/manage/accounts'
+    href: '/'
   },
   {
     title: 'Nhà cung cấp',

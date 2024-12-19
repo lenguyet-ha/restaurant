@@ -97,7 +97,7 @@ export default function LoginForm() {
                 Đăng nhập
               </Button>
               <Button variant='outline' className='w-full' type='button'>
-                Đăng nhập bằng Google
+                Quên mật khẩu
               </Button>
             </div>
           </form>
