@@ -123,7 +123,7 @@ export default function EditOrder({
     >
       <DialogContent className="text-white sm:max-w-[600px] max-h-screen overflow-auto">
         <DialogHeader>
-          <DialogTitle>Cập nhật đơn hàng</DialogTitle>
+          <DialogTitle>Cập nhật đơn gọi món</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form

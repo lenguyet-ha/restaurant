@@ -144,7 +144,7 @@ export default async function guestRoutes(fastify: FastifyInstance, options: Fas
       const guestId = request.decodedAccessToken?.userId as number
       const result = await guestGetOrdersController(guestId)
       reply.send({
-        message: 'Lấy danh sách đơn hàng thành công',
+        message: 'Lấy danh sách đơn gọi món thành công',
         data: result as GuestGetOrdersResType['data']
       })
     }

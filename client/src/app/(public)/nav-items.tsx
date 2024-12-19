@@ -35,7 +35,7 @@ const menuItems: {
     role: [Role.Owner, Role.Employee],
   },
   {
-    title: "Đơn hàng",
+    title: "Đơn gọi món",
     href: "orders",
     role: [Role.Guest],
   },
